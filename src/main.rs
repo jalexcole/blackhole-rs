@@ -42,7 +42,7 @@ fn main() {
         let mut d = rl.begin_drawing(&thread);
         start_time = SystemTime::now();
         
-        update(&mut pariticles, elapsed_time.as_secs_f64());
+        update(&mut pariticles, elapsed_time.as_secs_f32());
         d.clear_background(Color::BLACK);
         // d.draw_text("Hello, world!", 12, 12, 20, Color::BLACK);
         d.draw_fps(12, 12);
@@ -60,7 +60,7 @@ fn main() {
 }
 
 
-fn update(particles: &mut [Particle], time_step: f64) {
+fn update(particles: &mut [Particle], time_step: f32) {
 
     let mut gravity_forces = Vec::new();
 
@@ -75,18 +75,13 @@ fn update(particles: &mut [Particle], time_step: f64) {
 
         gravity_forces.push(grav_force);
     }
-
-    for p in particles.as_parallel_slice_mut() {
-        let mut vel = p.velocity.clone();
-        vel.x = vel.x * time_step as f32;
-        vel.y = vel.y * time_step as f32;
-        vel.z = vel.z * time_step as f32;
-
-        p.position += vel;
-    }
     
     for i in 0..particles.len() {
-        particles[i].velocity += gravity_forces[i] * time_step as f32;
+
+        particles[i].position += particles[i].velocity * time_step + gravity_forces[i] * time_step.powf(2.0) / 2.0;
+
+
+        particles[i].velocity += gravity_forces[i] * time_step;
     }
 }
 
