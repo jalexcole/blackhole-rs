@@ -1,0 +1,21 @@
+
+
+
+
+
+vscode:
+  extensions:
+    - rust-lang.rust-analyzerod.io/docs/introduction/learn-gitpod/gitpod-yaml)
+# and commit this file to your remote git repository to share the goodness with others.
+
+# Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
+
+tasks:
+  - init: yes | sdk install java
+  - init: sudo apt install libgl-dev
+  - init: yes | sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev
+  - init: rustup update
+  - init: cargo build
+    command: cargo watch -x run
+
+
